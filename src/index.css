@@ -94,7 +94,7 @@ body {
   width: 100%;
 }
 
-textarea, input[type="password"], input[type="text"] {
+textarea, input[type="password"], input[type="text"], input[type="number"] {
   width: 80%;
   padding: 1rem;
   font-size: 1rem;
