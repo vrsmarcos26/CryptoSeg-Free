@@ -1,3 +1,4 @@
+// Dashboard.jsx
 import React, { useState } from 'react';
 import * as Crypto from '../utils/cryptoUtils';
 
@@ -8,6 +9,9 @@ export default function Dashboard() {
   
   // Senha comum (AES, Vigenère)
   const [senha, setSenha] = useState('');
+  
+  // NOVO: Estado para o deslocamento da Cifra de César
+  const [deslocamento, setDeslocamento] = useState(5);
 
   // Chaves RSA
   const [chavePublicaGerada, setChavePublicaGerada] = useState('');
@@ -32,7 +36,7 @@ export default function Dashboard() {
     if (!inputText) return;
     let res = "";
     switch (algoritmo) {
-      case 'cesar': res = Crypto.criptografarCesar(inputText); break;
+      case 'cesar': res = Crypto.criptografarCesar(inputText, deslocamento); break; // Atualizado
       case 'vigenere': res = Crypto.criptografarVigenere(inputText, senha); break;
       case 'base64': res = btoa(inputText); break;
       case 'binario': res = Crypto.textoParaBinario(inputText); break;
@@ -55,7 +59,7 @@ export default function Dashboard() {
     if (!inputText) return;
     let res = "";
     switch (algoritmo) {
-      case 'cesar': res = Crypto.descriptografarCesar(inputText); break;
+      case 'cesar': res = Crypto.descriptografarCesar(inputText, deslocamento); break; // Atualizado
       case 'vigenere': res = Crypto.descriptografarVigenere(inputText, senha); break;
       case 'base64': 
         try { res = atob(inputText); } catch { res = "Base64 Inválido"; } break;
@@ -101,6 +105,16 @@ export default function Dashboard() {
           readOnly
         ></textarea>
         
+        {/* NOVO: Input numérico apenas para a Cifra de César */}
+        {algoritmo === 'cesar' && (
+          <input 
+            type="number" 
+            placeholder="Quantas casas pular (ex: 5)" 
+            value={deslocamento}
+            onChange={(e) => setDeslocamento(e.target.value)}
+          />
+        )}
+        
         {precisaSenha && (
           <input 
             type="text" 
@@ -111,6 +125,8 @@ export default function Dashboard() {
         )}
       </div>
     
+      {/* Restante do arquivo permanece inalterado... */}
+      
       <div className="button-group">
         <button onClick={handleCriptografar}>Criptografar</button>
         <button onClick={handleDescriptografar}>Descriptografar</button>
