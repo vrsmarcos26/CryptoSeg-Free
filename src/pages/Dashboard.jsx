@@ -104,7 +104,7 @@ export default function Dashboard() {
         {precisaSenha && (
           <input 
             type="text" 
-            placeholder="Digite uma senha ou palavra-chave..." 
+            placeholder="Digite uma senha ou palavra-chave... (palavra chave padrão: segredo)" 
             value={senha}
             onChange={(e) => setSenha(e.target.value)}
           />
