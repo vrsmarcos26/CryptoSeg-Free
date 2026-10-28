@@ -1,19 +1,21 @@
 import CryptoJS from 'crypto-js';
 
 // ===== Cifra de César =====
-export const criptografarCesar = (texto) => {
-  const deslocamento = 5;
+export const criptografarCesar = (texto, deslocamento = 5) => {
+  // Converte para número e garante que funcione mesmo se o número for maior que 26
+  const shift = Number(deslocamento) % 26; 
   return texto.replace(/[a-z]/gi, letra => {
     const base = letra === letra.toUpperCase() ? 65 : 97;
-    return String.fromCharCode(((letra.charCodeAt(0) - base + deslocamento) % 26) + base);
+    // Adicionamos +26 antes do módulo final para evitar resultados negativos no JavaScript
+    return String.fromCharCode((((letra.charCodeAt(0) - base + shift) % 26) + 26) % 26 + base);
   });
 };
 
-export const descriptografarCesar = (texto) => {
-  const deslocamento = 5;
+export const descriptografarCesar = (texto, deslocamento = 5) => {
+  const shift = Number(deslocamento) % 26;
   return texto.replace(/[a-z]/gi, letra => {
     const base = letra === letra.toUpperCase() ? 65 : 97;
-    return String.fromCharCode(((letra.charCodeAt(0) - base - deslocamento + 26) % 26) + base);
+    return String.fromCharCode((((letra.charCodeAt(0) - base - shift) % 26) + 26) % 26 + base);
   });
 };
 
